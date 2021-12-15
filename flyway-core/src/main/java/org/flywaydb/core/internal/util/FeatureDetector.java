@@ -21,7 +21,6 @@ import lombok.CustomLog;
 public final class FeatureDetector {
     private final ClassLoader classLoader;
     private Boolean apacheCommonsLoggingAvailable;
-    private Boolean log4J2Available;
     private Boolean slf4jAvailable;
     private Boolean jbossVFSv2Available;
     private Boolean jbossVFSv3Available;
@@ -39,14 +38,6 @@ public final class FeatureDetector {
         }
 
         return apacheCommonsLoggingAvailable;
-    }
-
-    public boolean isLog4J2Available() {
-        if (log4J2Available == null) {
-            log4J2Available = ClassUtils.isPresent("org.apache.logging.log4j.Logger", classLoader);
-        }
-
-        return log4J2Available;
     }
 
     public boolean isSlf4jAvailable() {
