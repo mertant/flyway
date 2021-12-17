@@ -24,7 +24,6 @@ import org.flywaydb.core.internal.logging.EvolvingLog;
 import org.flywaydb.core.internal.logging.apachecommons.ApacheCommonsLogCreator;
 import org.flywaydb.core.internal.logging.buffered.BufferedLogCreator;
 import org.flywaydb.core.internal.logging.javautil.JavaUtilLogCreator;
-import org.flywaydb.core.internal.logging.log4j2.Log4j2LogCreator;
 import org.flywaydb.core.internal.logging.multi.MultiLogCreator;
 import org.flywaydb.core.internal.logging.slf4j.Slf4jLogCreator;
 import org.flywaydb.core.internal.util.ClassUtils;
@@ -109,9 +108,6 @@ public class LogFactory {
                 case "slf4j":
                     logCreators.add(ClassUtils.instantiate(Slf4jLogCreator.class.getName(), classLoader));
                     break;
-                case "log4j2":
-                    logCreators.add(ClassUtils.instantiate(Log4j2LogCreator.class.getName(), classLoader));
-                    break;
                 case "apache-commons":
                     logCreators.add(ClassUtils.instantiate(ApacheCommonsLogCreator.class.getName(), classLoader));
                     break;
@@ -127,9 +123,6 @@ public class LogFactory {
         FeatureDetector featureDetector = new FeatureDetector(classLoader);
         if (featureDetector.isSlf4jAvailable()) {
             return ClassUtils.instantiate(Slf4jLogCreator.class.getName(), classLoader);
-        }
-        if (featureDetector.isLog4J2Available()) {
-            return ClassUtils.instantiate(Log4j2LogCreator.class.getName(), classLoader);
         }
         if (featureDetector.isApacheCommonsLoggingAvailable()) {
             return ClassUtils.instantiate(ApacheCommonsLogCreator.class.getName(), classLoader);
